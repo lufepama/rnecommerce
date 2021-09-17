@@ -8,7 +8,7 @@ export const useUserInfo = () => {
     const {userInfo, token, order, isUserLogged, setIsUserLogged, setOrder, setToken, setUserInfo} = useContext(UserCredentialsContext) 
     
     useEffect( () => {
-
+        console.log('primerrrrrroooo')
         if (!token) {
             getCredentials()
                 .then( (token) => {

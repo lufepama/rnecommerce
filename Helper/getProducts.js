@@ -1,15 +1,13 @@
 import {API} from '../backend'
 
-export const getOrderId = (username, token) => {
-    const userData = {'username':username}
-    return fetch(`${API}/api/order/create-order/`, {
-        method:'POST',
+export const getProducts = (token) => {
+    return fetch(`${API}/api/product/get-products/`, {
+        method:'GET',
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
             "Authorization": `Token ${token}` 
         },
-        body: JSON.stringify(userData)
     })
     .then((res)=>{
         return res.json()

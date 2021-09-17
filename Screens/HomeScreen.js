@@ -7,14 +7,19 @@ import { useFocusEffect } from '@react-navigation/native'
 import { deleteToken } from '../Helper/index'
 import Spinner from 'react-native-loading-spinner-overlay';
 import { getOrderId } from '../Helper/getOrderId'
+import Navbar from '../Components/Navbar'
+import ImageCarousel from '../Components/ImageCarousel'
+import { getProducts } from '../Helper/getProducts'
+import { useProducts } from '../Hooks/useProducts'
 
 const HomeScreen = ({ navigation }) => {
     
-    const [isLoading, setIsLoading] = useState(false)
     const {userInfo, token, setOrder, setIsUserLogged} = useUserInfo()
+    const [productList, setProductsList] = useState([])
+    const [load, setLoad] = useState(false)
+    const { products } = useProducts()
 
     const onDeleteToken = () => {
-        console.log('pressed')
         deleteToken()
             .then( (res) => {
                 if (res) {
@@ -24,31 +29,24 @@ const HomeScreen = ({ navigation }) => {
             .catch( (err) => console.log(err) )
     }
 
+
     useFocusEffect(
         useCallback(() => {
             getOrderId(userInfo.username, token)
                 .then( (res) => {
+                    console.log(res)
                     setOrder(res.order)
                 })
                 .catch( (err) => console.log(err))
         }, [])
     );
-    
-
 
     return (
         <View style={styles.root}>
-            <View style={styles.topbar} >
-                <Icon
-                    style={styles.icon}
-                    name='list-ul'
-                    size={35}
-                    color='white'
-                />
-                <Text style={styles.title} > Lista de tareas  </Text>
-            </View>
+            <Navbar/>
+            <ImageCarousel data={products} />
             <TouchableOpacity onPress={onDeleteToken} >
-                <Text > delete  </Text>
+                <Text>DELETEEE</Text>
             </TouchableOpacity>
         </View>
     )
@@ -60,9 +58,9 @@ HomeScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
     root:{
-        backgroundColor:'#2B2B2D',
+        backgroundColor:'#FEFDFA',
         marginTop:20,
-        padding:20,
+        padding:10,
         textAlign:'center',
         flex:1,
     }, 

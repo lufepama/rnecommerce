@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './Screens/HomeScreen'
-import SigninScreen from './Screens/SigninScreen';
-import SignupScreen from './Screens/SignupScreen';
 import { getCredentials } from './Helper/index'
 import { useUserInfo } from './Hooks/useUserInfo'
 import MainFlow from './Screens/MainFlow';
@@ -31,7 +29,7 @@ const SwitchNavigator = () => {
               isUserLogged ? (
                 <StackNavigator.Screen name='MainFlow' component={MainFlow} options={{ headerShown: false }}/>
             ):(
-                <StackNavigator.Screen name='Authentication' component={AuthFlow} options={{ headerShown: false }} />
+                <StackNavigator.Screen name='AutheFlow' component={AuthFlow} options={{ headerShown: false }} />
             )
             }
           </StackNavigator.Navigator>

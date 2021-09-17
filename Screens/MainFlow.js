@@ -1,16 +1,19 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ProductProvider } from '../Context/ProductContext';
 
 import HomeScreen from './HomeScreen';
 
-const Drawer = createBottomTabNavigator()
+const BottomTab = createBottomTabNavigator()
 
 const MainFlow = () => {
 
     return (
-        <Drawer.Navigator>
-            <Drawer.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
-        </Drawer.Navigator>
+        <ProductProvider>
+            <BottomTab.Navigator>
+                <BottomTab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
+            </BottomTab.Navigator>
+        </ProductProvider>
     )
 }
 

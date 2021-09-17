@@ -1,15 +1,13 @@
-import React, { useState, useCallback } from 'react'
-import { StyleSheet, View, TouchableOpacity } from 'react-native'
+import React, {useState} from 'react'
+import { StyleSheet, View } from 'react-native'
 import { Text, Input } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import FormButton from '../Components/FormButton'
-import NavLink from '../Components/NavLink'
-import { useUserInfo } from '../Hooks/useUserInfo' 
-import { saveToken } from '../Helper/index'
 import { signin } from '../Helper/signin'
-import { useFocusEffect } from '@react-navigation/native'
+import { useUserInfo } from '../Hooks/useUserInfo'
+import { saveToken } from '../Helper'
+import FormButton from './FormButton'
 
-const SigninScreen = ({ navigation }) => {
+const SigninForm = () => {
 
     const [userdata, setUserdata] = useState({
         username:'reactnative',
@@ -17,8 +15,8 @@ const SigninScreen = ({ navigation }) => {
     })
 
     const {username, password} = userdata
-    const {userInfo, setUserInfo, order, token,setToken,setOrder,isUserLogged, setIsUserLogged} = useUserInfo()
-
+    const {userInfo, setUserInfo, order, token, setToken, setOrder,isUserLogged, setIsUserLogged} = useUserInfo()
+    
     const onSubmit = () => {
         signin(username, password) 
         .then( (res) => {
@@ -35,21 +33,8 @@ const SigninScreen = ({ navigation }) => {
         } )
     }
 
-    useFocusEffect( 
-        React.useCallback( () =>{
-
-            console.log('signin montado', token)
-
-        },[] )
-    )
-
-
     return (
-        <View style={styles.mainContainer}>
-            <View style={styles.titleContainer}>
-                <Text  style={styles.title} h1>Signin</Text>
-            </View>
-            <View style={styles.formContainer}>
+        <View style={styles.formContainer}>
                 <View style={styles.inputContainer}>
                     <Input
                         style={styles.input}
@@ -81,32 +66,13 @@ const SigninScreen = ({ navigation }) => {
                             />
                         }
                     />
-                    <NavLink navigation={navigation} text='No tienes cuenta? Ve a la pagina de registro!' routeName='Signup' />
                     <FormButton text='Login' onSubmit={onSubmit} />
                 </View>
             </View>
-        </View>
     )
 }
 
-SigninScreen.navigationOptions = {
-    header: () => false
-}
-
 const styles = StyleSheet.create({
-    mainContainer:{
-        backgroundColor:'#2B2B2D',
-        marginTop:20,
-        paddingTop:20,
-        textAlign:'center',
-        flex:1
-    },
-    titleContainer:{
-        alignItems:'center',
-    },
-    title:{
-        color:'#FFFFFF'
-    },
     formContainer:{
         display:'flex',
         alignItems:'center',
@@ -124,4 +90,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default SigninScreen;
+export default SigninForm;
