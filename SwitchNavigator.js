@@ -28,6 +28,7 @@ const SwitchNavigator = () => {
             {
               isUserLogged ? (
                 <StackNavigator.Screen name='MainFlow' component={MainFlow} options={{ headerShown: false }}/>
+                
             ):(
                 <StackNavigator.Screen name='AutheFlow' component={AuthFlow} options={{ headerShown: false }} />
             )

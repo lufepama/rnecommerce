@@ -10,7 +10,7 @@ import FormButton from './FormButton'
 const SigninForm = () => {
 
     const [userdata, setUserdata] = useState({
-        username:'reactnative',
+        username:'martina',
         password:'trial'
     })
 
@@ -22,10 +22,12 @@ const SigninForm = () => {
         .then( (res) => {
             console.log(res)
             if (res.success) {
+                console.log(res)
                 saveToken(res.token)
                 setToken(res.token)
                 setUserInfo({...userInfo, username:res.username, firstName:res.firstName,lastName:res.lastName, email:res.email, token:res.token})
                 setIsUserLogged(true)
+                setOrder(res.orderId.toString())
             }
         } )
         .catch( (err) => {

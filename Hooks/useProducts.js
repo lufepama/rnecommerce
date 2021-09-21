@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
-import ProductContext from '../Context/ProductContext'
+import ShoppingContext from '../Context/ShoppingContext'
 import { getProducts } from '../Helper/getProducts'
 import { useUserInfo } from './useUserInfo'
 
 export const useProducts = () => {
 
     const { token } = useUserInfo()
-    const { products, setProducts } = useContext(ProductContext) 
+    const { products, setProducts } = useContext(ShoppingContext) 
     
     useEffect( () => {
-        console.log('useefect products')
         getProducts(token)
             .then( (res) => setProducts(res.success))
     },[] )

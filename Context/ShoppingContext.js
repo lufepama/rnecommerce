@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 
 const Context = React.createContext({})
 
-export const ProductProvider = ({children}) => {
+export const ShoppingProvider = ({children}) => {
 
     const [products, setProducts] = useState([])
-    
+    const [numberItemsCart, setNumberItemsCart] = useState(0)
     
     return (
-        <Context.Provider value={{ products, setProducts }} >
+        <Context.Provider value={{ products, setProducts, numberItemsCart, setNumberItemsCart }} >
             {children}
         </Context.Provider>
     )

@@ -1,11 +1,13 @@
 import React, {useState} from 'react'
-import { StyleSheet, TextInput, View } from 'react-native'
+import { StyleSheet, TextInput,Text , View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { useCart } from '../Hooks/useCart'
 
 const Navbar = () => {
 
     const [searchText, setSearchText] = useState('')
+    const { numberItemsCart } = useCart()
 
     return (
         <View style={styles.root} >
@@ -39,6 +41,8 @@ const Navbar = () => {
                         color='orange'
                     />
                 </TouchableOpacity>
+                {numberItemsCart!=0 && <Text style={styles.itemsNumber}> {numberItemsCart} </Text>}
+                
             </View>
         </View>
     )
@@ -71,6 +75,10 @@ const styles = StyleSheet.create({
         marginTop:5,
         marginLeft:5,
         flex:1
+    },
+    itemsNumber:{
+        color:'green',
+        fontWeight:'bold'
     }
 })
 

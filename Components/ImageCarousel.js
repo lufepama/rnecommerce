@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { View,
     StyleSheet, 
     Text, 
@@ -9,29 +9,41 @@ import { View,
 import { useFocusEffect } from '@react-navigation/native'
 import { API } from '../backend'
 
+
+
 const ImageCarousel = ({ data }) => {
     
-    const [activeIndex, setActiveIndex] = useState(2)
+    const [activeIndex, setActiveIndex] = useState(1)
     const windowWidth = useWindowDimensions().width
+    const viewabilityConfigCallbackPairs = useRef([
+        { onViewableItemsChanged  },
+      ]);
+
+    const onViewableItemsChanged = ({
+    viewableItems
+        }) => {
+            console.log('hola')
+            setActiveIndex(viewableItems[0].index)
+    };
 
     return (
         <View style={styles.root} >
             <FlatList
                 data={data}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.id.toString()}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 snapToInterval={windowWidth-40}
                 snapToAlignment={'center'}
                 decelerationRate={'fast'}
-                viewabilityConfig={{
+                viewabilityConfig = {{
                     viewAreaCoveragePercentThreshold:50, 
                 }}
-                onViewableItemsChanged={({viewableItems})=>
-                    console.log(viewableItems)
-                }
+                viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+
                 renderItem={({item}) =>
                     <Image
+                        key={item.id.toString()}
                         style={[styles.myImage, {width: windowWidth - 20}]} 
                         source={{ uri:(API+item.image) }}
                     />
@@ -40,6 +52,7 @@ const ImageCarousel = ({ data }) => {
             <View style={styles.dots} >
                 {data.map( (data, index) => (
                     <View 
+                        key={data.id.toString()}
                         style={[
                             styles.dot,
                             {

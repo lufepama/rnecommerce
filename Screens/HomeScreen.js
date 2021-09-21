@@ -1,23 +1,27 @@
 import React, { useState, useCallback } from 'react'
-import { StyleSheet, View, Text, FlatList } from 'react-native'
+import { StyleSheet, View, Text, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native'
 import { useUserInfo } from '../Hooks/useUserInfo'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import { TouchableOpacity } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { deleteToken } from '../Helper/index'
-import Spinner from 'react-native-loading-spinner-overlay';
 import { getOrderId } from '../Helper/getOrderId'
 import Navbar from '../Components/Navbar'
-import ImageCarousel from '../Components/ImageCarousel'
-import { getProducts } from '../Helper/getProducts'
 import { useProducts } from '../Hooks/useProducts'
+import ImageCarousel from '../Components/ImageCarousel'
+import ProductList from '../Components/ProductList'
+import BottomTab from '../Components/BottomTab'
+import { useCart } from '../Hooks/useCart'
 
 const HomeScreen = ({ navigation }) => {
     
     const {userInfo, token, setOrder, setIsUserLogged} = useUserInfo()
-    const [productList, setProductsList] = useState([])
-    const [load, setLoad] = useState(false)
     const { products } = useProducts()
+
+    const [colours, setColours] = useState({
+        home:'black',
+        search:'orange',
+        fav:'orange',
+        checkout:'orange'
+    })
 
     const onDeleteToken = () => {
         deleteToken()
@@ -29,25 +33,28 @@ const HomeScreen = ({ navigation }) => {
             .catch( (err) => console.log(err) )
     }
 
-
     useFocusEffect(
         useCallback(() => {
-            getOrderId(userInfo.username, token)
-                .then( (res) => {
-                    console.log(res)
-                    setOrder(res.order)
-                })
-                .catch( (err) => console.log(err))
+            
         }, [])
     );
 
     return (
         <View style={styles.root}>
-            <Navbar/>
-            <ImageCarousel data={products} />
-            <TouchableOpacity onPress={onDeleteToken} >
-                <Text>DELETEEE</Text>
-            </TouchableOpacity>
+                <Navbar/>
+                <ScrollView>
+                    <ImageCarousel data={products} />
+                    <TouchableOpacity onPress={onDeleteToken} >
+                        <Text>DELETEEE</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> navigation.navigate('Checkout')} >
+                        <Text>checkout</Text>
+                    </TouchableOpacity>
+                    <View style={styles.productList}>
+                        <ProductList products = {products} />
+                    </View>
+                </ScrollView>
+                <BottomTab colours={colours} navigation={navigation} />
         </View>
     )
 }
@@ -90,7 +97,12 @@ const styles = StyleSheet.create({
     spinnerTextStyle: {
         color: '#FFF'
     },
-    
+    productList : {
+        marginTop:15
+    },
+    bottomTabContainer:{
+        height:50,
+    }
 })
 
 export default HomeScreen;
