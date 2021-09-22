@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { StyleSheet, TextInput,Text , View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -41,8 +41,7 @@ const Navbar = () => {
                         color='orange'
                     />
                 </TouchableOpacity>
-                {numberItemsCart!=0 && <Text style={styles.itemsNumber}> {numberItemsCart} </Text>}
-                
+                {numberItemsCart !=0 && <Text style={styles.itemsNumber}> {numberItemsCart} </Text>}
             </View>
         </View>
     )

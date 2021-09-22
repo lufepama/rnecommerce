@@ -15,14 +15,6 @@ export const useUserInfo = () => {
                     setToken(token)
             } )
         }
-            // } else if ( !order ){
-        //     getOrderId(userInfo.username, token)
-        //         .then( (res) => {
-        //             console.log(res)
-        //             setOrder(res.order)
-        //         })
-        //         .catch( (err) => console.log(err))
-        // }
 
     },[] )
 

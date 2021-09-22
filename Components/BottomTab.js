@@ -35,7 +35,7 @@ const BottomTab = ({ navigation, colours}) => {
                     />
                     <Text >Favoritos</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Checkout') }>
+                <TouchableOpacity onPress={() => navigation.navigate('Cart') }>
                     <Icon
                         style={style.icon}
                         name='shopping-cart'

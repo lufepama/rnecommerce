@@ -9,7 +9,6 @@ export const useCart = () => {
     const { numberItemsCart, setNumberItemsCart } = useContext(ShoppingContext) 
     
     useEffect( () => {
-        console.log('order', order)
         getOrderItemList(token, order)
             .then( (res) => {
                 setNumberItemsCart(res.length)} )

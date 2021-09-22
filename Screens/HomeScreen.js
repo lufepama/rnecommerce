@@ -13,7 +13,7 @@ import { useCart } from '../Hooks/useCart'
 
 const HomeScreen = ({ navigation }) => {
     
-    const {userInfo, token, setOrder, setIsUserLogged} = useUserInfo()
+    const {setIsUserLogged} = useUserInfo()
     const { products } = useProducts()
 
     const [colours, setColours] = useState({
@@ -32,13 +32,7 @@ const HomeScreen = ({ navigation }) => {
             } )
             .catch( (err) => console.log(err) )
     }
-
-    useFocusEffect(
-        useCallback(() => {
-            
-        }, [])
-    );
-
+    
     return (
         <View style={styles.root}>
                 <Navbar/>

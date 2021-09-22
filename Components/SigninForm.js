@@ -20,9 +20,7 @@ const SigninForm = () => {
     const onSubmit = () => {
         signin(username, password) 
         .then( (res) => {
-            console.log(res)
             if (res.success) {
-                console.log(res)
                 saveToken(res.token)
                 setToken(res.token)
                 setUserInfo({...userInfo, username:res.username, firstName:res.firstName,lastName:res.lastName, email:res.email, token:res.token})

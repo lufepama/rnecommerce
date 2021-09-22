@@ -5,7 +5,7 @@ import ImageCarousel from'../Components/ImageCarousel'
 
 
 const ProductList = ({ products }) => {
-
+    
     return (
             <View style={styles.root} >
             <FlatList
