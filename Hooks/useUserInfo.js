@@ -5,19 +5,19 @@ import { getCredentials } from '../Helper/index'
 
 export const useUserInfo = () => {
 
-    const {userInfo, token, order, isUserLogged, setIsUserLogged, setOrder, setToken, setUserInfo} = useContext(UserCredentialsContext) 
-    
-    useEffect( () => {
-        
+    const { userInfo, token, order, isUserLogged, setIsUserLogged, setOrder, setToken, setUserInfo } = useContext(UserCredentialsContext)
+
+    useEffect(() => {
+
         if (!token) {
             getCredentials()
-                .then( (token) => {
+                .then((token) => {
                     setToken(token)
-            } )
+                })
         }
 
-    },[] )
+    }, [token])
 
-    return { userInfo, token, order, setOrder ,isUserLogged, setIsUserLogged, setToken, setUserInfo }
+    return { userInfo, token, order, setOrder, isUserLogged, setIsUserLogged, setToken, setUserInfo }
 
 }

@@ -1,31 +1,32 @@
 import React from 'react'
 import { View, Text, StyleSheet, FlatList, SafeAreaView } from 'react-native'
 import ProductCard from './ProductCard'
-import ImageCarousel from'../Components/ImageCarousel'
+import { useProducts } from '../Hooks/useProducts'
 
+const ProductList = () => {
 
-const ProductList = ({ products }) => {
-    
+    const { products } = useProducts()
+
     return (
-            <View style={styles.root} >
+        <View style={styles.root} >
             <FlatList
                 nestedScrollEnabled={true}
                 data={products}
                 numColumns={2}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({item}) =>
-                <ProductCard key={item.id.toString()} product={item} /> 
-            }
+                renderItem={({ item }) =>
+                    <ProductCard key={item.id.toString()} product={item} />
+                }
             />
-            </View>
-        
+        </View>
+
     )
 }
 
 const styles = StyleSheet.create({
     root: {
-        justifyContent:'center',
-        alignItems:'center',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 })
 

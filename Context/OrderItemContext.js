@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 
 const Context = React.createContext({})
 
-export const OrderItemProvider = ({children}) => {
+export const OrderItemProvider = ({ children }) => {
 
     const [orderItemList, setOrderItemList] = useState([])
-    
+
     return (
         <Context.Provider value={{ orderItemList, setOrderItemList }} >
             {children}

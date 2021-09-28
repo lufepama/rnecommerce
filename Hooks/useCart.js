@@ -6,13 +6,15 @@ import { useUserInfo } from '../Hooks/useUserInfo'
 export const useCart = () => {
 
     const { token, order } = useUserInfo()
-    const { numberItemsCart, setNumberItemsCart } = useContext(ShoppingContext) 
-    
-    useEffect( () => {
-        getOrderItemList(token, order)
-            .then( (res) => {
-                setNumberItemsCart(res.length)} )
-    },[] )
+    const { numberItemsCart, setNumberItemsCart } = useContext(ShoppingContext)
 
-    return { numberItemsCart, setNumberItemsCart}
+    useEffect(() => {
+        getOrderItemList(token, order)
+            .then((res) => {
+                setNumberItemsCart(res.length)
+            })
+            .catch((err) => console.log(err))
+    }, [])
+
+    return { numberItemsCart, setNumberItemsCart }
 }

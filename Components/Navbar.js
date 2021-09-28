@@ -1,13 +1,26 @@
-import React, {useEffect, useState} from 'react'
-import { StyleSheet, TextInput,Text , View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, TextInput, Text, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { useCart } from '../Hooks/useCart'
+import { useUserInfo } from '../Hooks/useUserInfo'
+import { deleteToken } from '../Helper/index'
 
 const Navbar = () => {
 
     const [searchText, setSearchText] = useState('')
     const { numberItemsCart } = useCart()
+    const { setIsUserLogged } = useUserInfo()
+
+    const onDeleteToken = () => {
+        deleteToken()
+            .then((res) => {
+                if (res) {
+                    setIsUserLogged(false)
+                }
+            })
+            .catch((err) => console.log(err))
+    }
 
     return (
         <View style={styles.root} >
@@ -19,16 +32,24 @@ const Navbar = () => {
                     color='orange'
                 />
                 <TextInput
-                        style={styles.input}
-                        onChangeText={(newText) => setSearchText(newText)}
-                        autoCapitalize='none'
-                        value={searchText}
-                        placeholder="Buscar..."
+                    style={styles.input}
+                    onChangeText={(newText) => setSearchText(newText)}
+                    autoCapitalize='none'
+                    value={searchText}
+                    placeholder="Buscar..."
                 />
                 <TouchableOpacity style={styles.searchBtn} >
                     <Icon
                         style={styles.searchIcon}
                         name='search'
+                        size={30}
+                        color='orange'
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.cartBtn} onPress={onDeleteToken}>
+                    <Icon
+                        style={styles.cartIcon}
+                        name='times'
                         size={30}
                         color='orange'
                     />
@@ -41,43 +62,43 @@ const Navbar = () => {
                         color='orange'
                     />
                 </TouchableOpacity>
-                {numberItemsCart !=0 && <Text style={styles.itemsNumber}> {numberItemsCart} </Text>}
+                {numberItemsCart != 0 && <Text style={styles.itemsNumber}> {numberItemsCart} </Text>}
             </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    root:{
-        height:50,
+    root: {
+        height: 50,
     },
     topbar: {
-        flexDirection:'row',
-        paddingHorizontal:2
+        flexDirection: 'row',
+        paddingHorizontal: 2
     },
     brandIcon: {
-        marginTop:5
+        marginTop: 5
     },
     input: {
         height: 40,
-        flex:2,
+        flex: 2,
         marginTop: 5,
-        marginLeft:5,
+        marginLeft: 5,
         padding: 10,
     },
     searchBtn: {
-        marginTop:5,
-        marginLeft:5,
-        flex:1
+        marginTop: 5,
+        marginLeft: 5,
+        flex: 1
     },
     cartBtn: {
-        marginTop:5,
-        marginLeft:5,
-        flex:1
+        marginTop: 5,
+        marginLeft: 5,
+        flex: 1
     },
-    itemsNumber:{
-        color:'green',
-        fontWeight:'bold'
+    itemsNumber: {
+        color: 'green',
+        fontWeight: 'bold'
     }
 })
 
