@@ -3,9 +3,9 @@ import { View, Text, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-const BottomTab = ({ navigation, colours}) => {
-    
-    const {home, search, fav, checkout} = colours
+const BottomTab = ({ navigation, colours }) => {
+
+    const { home, search, fav, checkout } = colours
 
     return (
         <View style={style.root} >
@@ -26,7 +26,7 @@ const BottomTab = ({ navigation, colours}) => {
                     />
                     <Text  >Buscar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity  onPress={() =>  navigation.navigate('Favourite') }>
+                <TouchableOpacity onPress={() => navigation.navigate('Favourite')}>
                     <Icon
                         style={style.icon}
                         name='heart'
@@ -35,7 +35,7 @@ const BottomTab = ({ navigation, colours}) => {
                     />
                     <Text >Favoritos</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Cart') }>
+                <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
                     <Icon
                         style={style.icon}
                         name='shopping-cart'
@@ -50,16 +50,16 @@ const BottomTab = ({ navigation, colours}) => {
 }
 
 const style = StyleSheet.create({
-    root:{
-        height:60,
+    root: {
+        height: 60,
     },
     mainContainer: {
-        padding:10,
-        flexDirection:'row',
-        justifyContent:'space-between',
+        padding: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
-    icon:{
-        marginLeft:10
+    icon: {
+        marginLeft: 10
     }
 })
 

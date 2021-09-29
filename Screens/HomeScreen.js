@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         color: '#FFF'
     },
     productList: {
-        marginTop: 15
+        marginVertical: 20
     },
     bottomTabContainer: {
         height: 50,

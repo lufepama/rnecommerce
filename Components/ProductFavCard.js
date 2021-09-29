@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { API } from '../backend'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { useCart } from '../Hooks/useCart'
 import { postOrderItem } from '../Helper/postOrderItem'
 import { useUserInfo } from '../Hooks/useUserInfo'
+import { useOrderItems } from '../Hooks/useOrderItem'
+import { useFocusEffect } from '@react-navigation/core'
+
 
 const ProductFavCard = ({ product, onDelete }) => {
 
     const { numberItemsCart, setNumberItemsCart } = useCart() //*
+    const { orderItemList } = useOrderItems()
+    const [isAdded, setIsAdded] = useState(false)
+
     const { token, order } = useUserInfo()
 
     const displayRating = () => {
@@ -20,10 +26,26 @@ const ProductFavCard = ({ product, onDelete }) => {
     }
 
     const onAddToCart = () => {
-        setNumberItemsCart(numberItemsCart + 1)
-        postOrderItem(product.id, order, token)
-            .then((res) => console.log(res))
+        if (!isAdded) {
+            setIsAdded(true)
+            setNumberItemsCart(numberItemsCart + 1)
+            postOrderItem(product.id, order, token)
+        }
     }
+
+    useFocusEffect(
+        useCallback(() => {
+
+            const isProductAdded = orderItemList.some((item) => item.productId === product.id)
+
+            if (isProductAdded) {
+                setIsAdded(true)
+            } else {
+                setIsAdded(false)
+            }
+
+        }, [orderItemList])
+    );
 
     return (
         <View style={styles.root} >
@@ -42,7 +64,7 @@ const ProductFavCard = ({ product, onDelete }) => {
                 </View>
                 <View style={styles.descriptionContainer}>
                     <Text style={styles.name} >  {product.name} </Text>
-                    <Text style={styles.description} numberOfLines={2} >  {product.description} </Text>
+                    {/* <Text style={styles.description} numberOfLines={2} >  {product.description} </Text> */}
                     <View style={styles.pricingContainer} >
                         <Text>  {product.price}€ </Text>
                         {
@@ -53,9 +75,21 @@ const ProductFavCard = ({ product, onDelete }) => {
                     </View>
 
                     {displayRating()}
-                    <TouchableOpacity style={styles.addBtn} onPress={onAddToCart}>
-                        <Text>Lo quiero</Text>
-                    </TouchableOpacity>
+                    <View style={{
+                        opacity: isAdded ? 0.5 : 1
+                    }}>
+                        <TouchableOpacity style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: 'orange',
+                            height: 30,
+                            borderRadius: 10,
+                        }} onPress={onAddToCart}
+                            activeOpacity={isAdded ? 1 : 0.2}
+                        >
+                            <Text>Lo quiero</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
             </View>

@@ -12,6 +12,7 @@ import { useFocusEffect } from '@react-navigation/core'
 import { postFavourite } from '../Helper/postFavourite'
 import { deleteFavProduct } from '../Helper/deleteFavProduct'
 import { useOrderItems } from '../Hooks/useOrderItem'
+import { useNavigation } from '@react-navigation/native'
 
 const ProductCard = ({ product }) => {
 
@@ -19,7 +20,7 @@ const ProductCard = ({ product }) => {
     const { favList, setFavList } = useProducts() //*
     const { userInfo, token, order } = useUserInfo()
     const { orderItemList } = useOrderItems()
-
+    const navigation = useNavigation();
     const [icon, setIcon] = useState('heart')
     const [isAdded, setIsAdded] = useState(false)
 
@@ -78,9 +79,12 @@ const ProductCard = ({ product }) => {
     return (
         <View style={styles.root} >
             <View style={styles.mainContainer}>
-                <View style={styles.imagenContainer}>
-                    <Image style={styles.image} source={{ uri: API + product.image }} />
-                </View>
+                <TouchableOpacity onPress={() => navigation.navigate('Detail', { 'product': product })} >
+                    <View style={styles.imagenContainer}>
+                        <Image style={styles.image} source={{ uri: API + product.image }} />
+                    </View>
+                </TouchableOpacity>
+
                 <View style={styles.likeContainer} >
                     <TouchableOpacity onPress={onAddDeleteFavourite}  >
                         <Icon
@@ -91,7 +95,6 @@ const ProductCard = ({ product }) => {
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.name} >  {product.name} </Text>
-                <Text style={styles.description} numberOfLines={2} >  {product.description} </Text>
                 <View style={styles.pricingContainer} >
                     <Text>  {product.price}€ </Text>
                     {
@@ -142,11 +145,8 @@ const styles = StyleSheet.create({
 
     },
     mainContainer: {
-        height: 300,
+        height: 250,
         flexDirection: 'column',
-
-    },
-    imagenContainer: {
 
     },
     image: {
@@ -169,7 +169,8 @@ const styles = StyleSheet.create({
     },
     pricingContainer: {
         flexDirection: 'row',
-        flex: 0.5,
+        flex: 1,
+        marginTop: 10
     },
     previousPrice: {
         textDecorationLine: 'line-through',
